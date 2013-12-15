@@ -1,0 +1,30 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Other files to ignore
+*.exe
+*.~*
+*.obj
+*.tds
+*.res
+
+/.idea
+/target
+/bin
+*.class
+/.settings
+.project
+.buildpath
+*.iml
+.classpath
