@@ -12,9 +12,11 @@ public class TestApp {
 		
 		server.start();
 		client.start();
+		
 		client.join();
 		server.stopReceiving();
 		server.join();
+		
 		server.printsStats();
 		client.printsStats();
 	}

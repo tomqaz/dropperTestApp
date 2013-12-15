@@ -1,20 +1,27 @@
 package pl.edu.agh.dropper.appTest;
 
 import java.net.DatagramPacket;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractUDPSender extends Thread{
-	int port;
-	int receiveCounter = 0;
-	final String name;
-	List<String> messages;
+	protected final String name;
+	protected final int port;
+	protected int receiveCounter = 0;
+	protected List<String> messages;
 	
-	public AbstractUDPSender(String name){
+	public AbstractUDPSender(String name, int port){
 		this.name = name;
+		this.port = port;
+		messages = new ArrayList<>();
 	}
 	protected void handleIncomingPacket(DatagramPacket receivePacket) {
 		messages.add(new String(receivePacket.getData()));
 		++receiveCounter;
+		String msg = String.format("%s(%s) FROM: %d RECEIVED: %s",
+				name.substring(0, 3), receiveCounter, receivePacket.getPort(),
+				new String(receivePacket.getData()));
+		System.out.println(msg);
 	}
 	
 	

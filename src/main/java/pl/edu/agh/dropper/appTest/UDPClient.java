@@ -4,16 +4,13 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
 
 class UDPClient extends AbstractUDPSender {
-	int count;
+	int msgToSendCount;
 
-	public UDPClient(int port, int count) {
-		super("Client");
-		this.port = port;
-		this.count = count;
-		messages = new ArrayList<>();
+	public UDPClient(int port, int msgToSendCount) {
+		super("Client", port);
+		this.msgToSendCount = msgToSendCount;
 	}
 
 	@Override
@@ -34,7 +31,7 @@ class UDPClient extends AbstractUDPSender {
 		String sentence = "aaa";
 		DatagramPacket sendPacket;
 		clientSocket.setSoTimeout(500);
-		for (int i = 0; i < count; ++i) {
+		for (int i = 0; i < msgToSendCount; ++i) {
 			sendData = (sentence + i).getBytes();
 			sendPacket = new DatagramPacket(sendData, sendData.length,
 					IPAddress, port);
@@ -44,16 +41,10 @@ class UDPClient extends AbstractUDPSender {
 				DatagramPacket receivePacket = new DatagramPacket(receiveData,
 						receiveData.length);
 				clientSocket.receive(receivePacket);
-				String msg = String.format("\t%s(%s) FROM: %d RECEIVED: %s",
-						name.substring(0, 3), receiveCounter,
-						receivePacket.getPort(),
-						new String(receivePacket.getData()));
-				System.out.println(msg);
 				handleIncomingPacket(receivePacket);
 			} catch (SocketTimeoutException e) {
 				// System.out.println("timeout");
 			}
-
 		}
 
 		clientSocket.close();

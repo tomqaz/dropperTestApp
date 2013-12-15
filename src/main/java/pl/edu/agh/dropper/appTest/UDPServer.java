@@ -4,15 +4,12 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
 
 class UDPServer extends AbstractUDPSender {
 	boolean keepReceiving = true;
 
 	public UDPServer(int port) {
-		super("Server");
-		this.port = port;
-		messages = new ArrayList<>();
+		super("Server", port);
 	}
 
 	@Override
@@ -36,16 +33,11 @@ class UDPServer extends AbstractUDPSender {
 			String sentence;
 			try {
 				serverSocket.receive(receivePacket);
-
 				handleIncomingPacket(receivePacket);
-				sentence = new String(receivePacket.getData());
 
+				sentence = new String(receivePacket.getData());
 				InetAddress IPAddress = receivePacket.getAddress();
 				int senderPort = receivePacket.getPort();
-				String msg = String.format("%s(%d) FROM: %d RECEIVED: %s",
-						name.substring(0, 3), receiveCounter, senderPort,
-						sentence);
-				System.out.println(msg);
 
 				String capitalizedSentence = sentence.toUpperCase();
 				sendData = capitalizedSentence.getBytes();
