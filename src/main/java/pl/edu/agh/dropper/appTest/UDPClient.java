@@ -30,7 +30,7 @@ class UDPClient extends AbstractUDPSender {
 
 		String sentence = "aaa";
 		DatagramPacket sendPacket;
-		clientSocket.setSoTimeout(500);
+		clientSocket.setSoTimeout(5000);
 		for (int i = 0; i < msgToSendCount; ++i) {
 			sendData = (sentence + i).getBytes();
 			sendPacket = new DatagramPacket(sendData, sendData.length,
@@ -42,7 +42,7 @@ class UDPClient extends AbstractUDPSender {
 						receiveData.length);
 				clientSocket.receive(receivePacket);
 				handleIncomingPacket(receivePacket);
-			} catch (SocketTimeoutException e) {
+            } catch (SocketTimeoutException e) {
 				// System.out.println("timeout");
 			}
 		}

@@ -41,6 +41,7 @@ class UDPServer extends AbstractUDPSender {
 
 				String capitalizedSentence = sentence.toUpperCase();
 				sendData = capitalizedSentence.getBytes();
+
 				DatagramPacket sendPacket = new DatagramPacket(sendData,
 						sendData.length, IPAddress, senderPort);
 				serverSocket.send(sendPacket);
@@ -50,6 +51,7 @@ class UDPServer extends AbstractUDPSender {
 
 		}
 		serverSocket.close();
+        TestApp app = new TestApp();
 	}
 
 	public void stopReceiving() {
